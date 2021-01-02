@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e
+
+if [ -z "$1" ]; then
+    echo "Use: $0 page-name (with no section suffix)"
+    exit 1
+fi
+
+# make sure the rules have been regenerated (in case man/update-man-rules was just run)
+ninja -C "/home/renodr/Documents/Sources and Scripts Backup/systemd-246/build" version.h
+
+target="man/$1.html"
+ninja -C "/home/renodr/Documents/Sources and Scripts Backup/systemd-246/build" "$target"
+set -x
+exec xdg-open "/home/renodr/Documents/Sources and Scripts Backup/systemd-246/build/$target"
